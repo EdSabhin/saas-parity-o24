@@ -2,7 +2,7 @@ import Link from "next/link";
 import { NeonIcon } from "../_icons/Neon";
 import { ClerkIcon } from "../_icons/Clerk";
 
-export function ClientIcons() {
+function ClientIcons() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16">
         <Link href="https://neon.tech">
@@ -38,3 +38,5 @@ export function ClientIcons() {
     </div>
   )
 }
+
+export default ClientIcons

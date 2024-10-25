@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { SignUpButton } from "@clerk/nextjs";
-import { ArrowRightIcon, CheckIcon } from "lucide-react";
+import { ArrowRightIcon} from "lucide-react";
 import { subscriptionTiersInOrder } from "@/data/subscriptionTiers";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatCompactNumber } from "@/lib/formatters";
-import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
-import { ClientIcons } from "./_components/ClientIcons";
+
+import ClientIcons  from "./_components/ClientIcons";
 import Footer from "./_components/Footer";
+import PricingCard from "./_components/PricingCard";
 
 export default function HomePage() {
   return <>
@@ -38,39 +36,4 @@ export default function HomePage() {
   </>;
 }
 
-function PricingCard({ name, priceInCents, maxNumberOfVisits, maxNumberOfProducts, canRemoveBranding, canAccessAnalytics, canCustomizeBanner, }: typeof subscriptionTiersInOrder[number]) {
-  const isMostPopular = name === "Standard";
-  return (
-    <Card>
-    <CardHeader>
-      <h3 className="text-accent font-semibold mb-8">{name}</h3>
-      <CardTitle className="text-xl font-bold">
-        ${priceInCents / 100} /mo
-      </CardTitle>
-      <CardDescription>{formatCompactNumber(maxNumberOfVisits)} pricing page visits/mo</CardDescription>
-    </CardHeader>
-    <CardContent>
-      <SignUpButton>
-        <Button className="w-full text-lg rounded-lg" variant={isMostPopular ? "accent" : "default"}>Get Started</Button>
-      </SignUpButton>
-      </CardContent>
-      <CardFooter className="flex flex-col items-start gap-4 ">
-        <Feature className="font-bold">{maxNumberOfProducts} {maxNumberOfProducts === 1 ? "Product" : "Products"}</Feature>
-        <Feature>Cool Feat!</Feature>
-        {canAccessAnalytics && <Feature>Advanced Analytics</Feature>}
-        {canCustomizeBanner && <Feature>Banner Customization</Feature>}
-        {canRemoveBranding && <Feature>Easy Branding Removal</Feature>}
-      </CardFooter>
-  </Card>
-  )
-}
-
-function Feature({ children, className}: {children: ReactNode, className?:string}) {
-  return (
-    <div className={cn("flex items-center gap-2", className)}>
-    <CheckIcon className="size-4 stroke-accent bg-accent/25 rounded-full p-0.5" />
-    <span>{children}</span>
-  </div>)
-  
-}
 
