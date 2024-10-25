@@ -19,13 +19,15 @@ function Feature({ children, className}: {children: ReactNode, className?:string
 function PricingCard({ name, priceInCents, maxNumberOfVisits, maxNumberOfProducts, canRemoveBranding, canAccessAnalytics, canCustomizeBanner, }: typeof subscriptionTiersInOrder[number]) {
   const isMostPopular = name === "Standard";
   return (
-    <Card>
+    <Card className="pb-2">
     <CardHeader>
-      <h3 className="text-accent font-semibold mb-8">{name}</h3>
+      <h3 className="text-accent font-semibold mb-6">{name}</h3>
       <CardTitle className="text-xl font-bold">
-        ${priceInCents / 100} /mo
-      </CardTitle>
-      <CardDescription>{formatCompactNumber(maxNumberOfVisits)} pricing page visits/mo</CardDescription>
+          ${priceInCents / 100} /mo
+        </CardTitle>
+        <CardDescription>
+          {formatCompactNumber(maxNumberOfVisits)} pricing page visits/mo
+        </CardDescription>
     </CardHeader>
     <CardContent>
       <SignUpButton>
