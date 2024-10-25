@@ -2,14 +2,13 @@ import { Button } from "@/components/ui/button";
 import { SignUpButton } from "@clerk/nextjs";
 import { ArrowRightIcon, CheckIcon } from "lucide-react";
 import Link from "next/link";
-import { NeonIcon } from "./_icons/Neon";
-import { ClerkIcon } from "./_icons/Clerk";
 import { subscriptionTiersInOrder } from "@/data/subscriptionTiers";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCompactNumber } from "@/lib/formatters";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "@/components/BrandLogo";
+import { ClientIcons } from "./_components/ClientIcons";
 
 export default function HomePage() {
   return <>
@@ -25,38 +24,7 @@ export default function HomePage() {
     <section className="bg-primary text-primary-foreground">
       <div className="container flex flex-col gap-16 py-16 px-8 md:px-16 ">
         <h2 className="text-3xl text-center text-balance">Trusted by the top modern companies</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16">
-          <Link href="https://neon.tech">
-            <NeonIcon />
-          </Link>
-          <Link href="https://clerk.com">
-            <ClerkIcon />
-          </Link>
-          <Link href="https://neon.tech">
-            <NeonIcon />
-          </Link>
-          <Link href="https://clerk.com">
-            <ClerkIcon />
-          </Link>
-          <Link href="https://neon.tech">
-            <NeonIcon />
-          </Link>
-          <Link href="https://clerk.com">
-            <ClerkIcon />
-          </Link>
-          <Link href="https://neon.tech">
-            <NeonIcon />
-          </Link>
-          <Link href="https://clerk.com">
-            <ClerkIcon />
-          </Link>
-          <Link href="https://neon.tech">
-            <NeonIcon />
-          </Link>
-          <Link href="https://clerk.com" className="md:max-xl:hidden">
-            <ClerkIcon />
-          </Link>
-        </div>
+        <ClientIcons />
       </div>
     </section>
     <section id="pricing" className="py-16 px-8 bg-accent/5">
