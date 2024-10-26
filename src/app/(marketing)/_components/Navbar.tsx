@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function Navbar() {
   return <header className="w-full flex fixed top-0 z-10 bg-background/95 shadow-xl">
-    <nav className="container flex items-center gap-10 font-semibold">
+    <nav className="container flex items-center gap-10 pt-6 pb-7 font-semibold">
       <Link href="/" className="mr-auto">
         <BrandLogo />
       </ Link>
