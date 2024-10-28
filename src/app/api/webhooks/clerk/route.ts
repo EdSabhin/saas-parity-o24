@@ -2,8 +2,8 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { env } from "@/data/env/server";
-import { UserSubscriptionTable } from "@/drizzle/schema";
-import { db } from "@/drizzle/db";
+import { createUserSubscription } from "@/server/db/subscription";
+import { deleteUser } from "@/server/db/users";
 
 export async function POST(req: Request) {
   // Get the headers
@@ -45,11 +45,14 @@ export async function POST(req: Request) {
   // Payload processing
   switch (event.type) {
     case "user.created": {
-      // User created
-      await db
-        .insert(UserSubscriptionTable)
-        .values({ clerkUserId: event.data.id, tier: "Free" });
+      await createUserSubscription({
+        clerkUserId: event.data.id,
+        tier: "Free",
+      });
       break;
+    }
+    case "user.deleted": {
+      if (event.data.id != null) await deleteUser(event.data.id);
     }
   }
 
