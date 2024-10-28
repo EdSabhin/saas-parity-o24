@@ -10,11 +10,11 @@ import {
   boolean,
   real,
   primaryKey,
-  pgEnum
+  pgEnum,
 } from "drizzle-orm/pg-core";
 
 
-// Created and Updated
+// Created and Updated Columns
 
 const createdAt = timestamp("created_at", { withTimezone: true })
   .notNull()
@@ -26,7 +26,7 @@ const updatedAt = timestamp("updated_at", { withTimezone: true })
   .$onUpdate(() => new Date());
 
 
-// Product Table + Relations  
+// Product Table + Relations
 
 export const ProductTable = pgTable(
   "products",
@@ -49,11 +49,11 @@ export const ProductTable = pgTable(
 export const productRelations = relations(ProductTable, ({ one, many }) => ({
   productCustomization: one(ProductCustomizationTable),
   productViews: many(ProductViewTable),
-  countryGroupDiscounts: many(CountryGroupDiscountTable)
+  countryGroupDiscounts: many(CountryGroupDiscountTable),
 }));
 
 
-// Product Customization Table + Relations 
+// Product Customization Table + Relations
 
 export const ProductCustomizationTable = pgTable("product_customizations", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -89,7 +89,7 @@ export const productCustomizationRelations = relations(
 );
 
 
-// Product View Table + Relations 
+// Product View Table + Relations
 
 export const ProductViewTable = pgTable("product_views", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -193,7 +193,7 @@ export const countryGroupDiscountRelations = relations(
 );
 
 
-// User Subscription Table 
+// User Subscription Table
 
 export const TierEnum = pgEnum(
   "tier",
