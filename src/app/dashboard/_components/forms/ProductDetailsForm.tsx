@@ -5,21 +5,34 @@ import { z } from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import { productDetailsSchema } from "@/schemas/products"
+import { createProduct } from "@/server/actions/products"
+import { useToast } from "@/hooks/use-toast"
 
-const productDetailsSchema = z.object({
-  name: z.string().min(1, "Required"),
-  url: z.string().url().min(1, "Required"),
-  description: z.string().optional(),
-})
 
 export function ProductDetailsForm() {
+  const { toast } = useToast()
   const form = useForm<z.infer<typeof productDetailsSchema>>({
     resolver: zodResolver(productDetailsSchema),
-    defaultValues: {}
+    defaultValues: {
+      name: "",
+      url: "",
+      description: ""
+    }
   })
 
-  function onSubmit(values: z.infer<typeof productDetailsSchema>)  {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof productDetailsSchema>)  {
+    const data = await createProduct(values)
+
+    if (data?.message) {
+      toast({
+        title: data.error ? "Error" : "Success",
+        description: data.message,
+        variant: data.error ? "destructive" : "default"
+      })
+    }
   }
 
   return (
@@ -29,7 +42,7 @@ export function ProductDetailsForm() {
           <FormField
           control={form.control} name="name" render={({ field }) => (
             <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Product Name</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -51,8 +64,26 @@ export function ProductDetailsForm() {
             </FormItem>
           )}
           />
+          <FormField
+          control={form.control} name="description" render={({ field }) => (
+            <FormItem>
+                <FormLabel>Product Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} className="min-h-20 resize-none" />
+                </FormControl>
+                <FormDescription >
+                  An optional description to help distinguish your product from other products.
+                </FormDescription>
+                <FormMessage />
+            </FormItem>
+          )}
+          />
         </div>
-        
+        <div className="self-end">
+          <Button disabled={form.formState.isSubmitting} type="submit">
+            Save
+          </Button>
+        </div>
       </form>
     </Form>
   )
